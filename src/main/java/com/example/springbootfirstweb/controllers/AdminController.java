@@ -5,6 +5,7 @@ import com.example.springbootfirstweb.model.Role;
 import com.example.springbootfirstweb.model.User;
 import com.example.springbootfirstweb.services.RoleService;
 import com.example.springbootfirstweb.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +17,14 @@ import java.util.Set;
 @Controller
 @RequestMapping( value = "/admin")
 public class AdminController {
-
-    private final UserService userService;
-
-    private final RoleService roleService;
-
-    public AdminController(UserService userService, RoleService roleService) {
+    private UserService userService;
+    private RoleService roleService;
+    @Autowired
+    public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+    @Autowired
+    public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
 
@@ -55,13 +57,12 @@ public class AdminController {
     public String updateUser(@ModelAttribute("user")User user,
                              @PathVariable("id")Long id,
                              @RequestParam("role") String[] roles){
-        User upUser = user;
         Set<Role> roleSet = new HashSet<>();
         for (String role : roles){
             roleSet.add(roleService.findRoleByName(role));
         }
-        upUser.setRoles(roleSet);
-        userService.updateUser(upUser, id);
+        user.setRoles(roleSet);
+        userService.updateUser(user, id);
         return "redirect:/admin";
     }
 
@@ -74,13 +75,12 @@ public class AdminController {
     @PostMapping()
     public String createUser(@ModelAttribute("user")User user,
                              @RequestParam("role") String[] roles){
-        User upUser = user;
         Set<Role> roleSet = new HashSet<>();
         for (String role : roles){
             roleSet.add(roleService.findRoleByName(role));
         }
-        upUser.setRoles(roleSet);
-        userService.addUser(upUser);
+        user.setRoles(roleSet);
+        userService.addUser(user);
         return "redirect:/admin";
     }
 

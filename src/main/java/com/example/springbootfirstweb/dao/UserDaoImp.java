@@ -1,12 +1,9 @@
-package com.example.springbootfirstweb.DAO;
+package com.example.springbootfirstweb.dao;
 
 
 import com.example.springbootfirstweb.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Access;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -25,14 +22,12 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User findUser(Long userId){
-        User fUser = entityManager.find(User.class, userId);
-        return fUser;
+        return entityManager.find(User.class, userId);
     }
 
     @Override
     public void deleteUser(Long userId){
-        User dUser = entityManager.find(User.class, userId);
-        entityManager.remove(dUser);
+        entityManager.remove(entityManager.find(User.class, userId));
     }
 
     @Override
@@ -44,27 +39,15 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void updateUser(User user, Long userId){
-        User updateUser = entityManager.find(User.class, userId);
-        entityManager.detach(updateUser);
-        updateUser.setName(user.getName());
-        updateUser.setSurName(user.getSurName());
-        updateUser.setAge(user.getAge());
-        updateUser.setPassword(user.getPassword());
-        updateUser.setRoles(user.getRoles());
-        entityManager.merge(updateUser);
+        entityManager.detach(entityManager.find(User.class, userId));
+        entityManager.merge(user);
     }
 
     @Override
     public User findUserByUsername(String name){
-        User fUSer = entityManager.createQuery("select user from User user where user.name=:name",User.class)
+        return entityManager.createQuery("select user from User user join fetch user.roles where user.name=:name",User.class)
                 .setParameter("name", name)
                 .getSingleResult();
-        return fUSer;
     }
-
-
-
-
-
 
 }

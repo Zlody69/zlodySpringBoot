@@ -1,4 +1,4 @@
-package com.example.springbootfirstweb.DAO;
+package com.example.springbootfirstweb.dao;
 
 
 import com.example.springbootfirstweb.model.Role;
@@ -24,10 +24,9 @@ public class RoleDaoImp implements RoleDao{
 
     @Override
     public Role findRoleByName(String name){
-        Role role = entityManager.createQuery("select role from Role role where role.name=:name",Role.class)
+        return entityManager.createQuery("select role from Role role where role.name=:name",Role.class)
                 .setParameter("name", name)
                 .getSingleResult();
-        return role;
     }
 
 }

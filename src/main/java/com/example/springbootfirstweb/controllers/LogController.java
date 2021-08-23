@@ -1,6 +1,8 @@
 package com.example.springbootfirstweb.controllers;
 
 import com.example.springbootfirstweb.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,11 @@ import java.util.List;
 @Controller
 @RequestMapping
 public class LogController {
-    private final UserService userService;
+    private UserDetailsService userDetailsService;
 
-    public LogController(UserService userService) {
-        this.userService = userService;
+    @Autowired
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/login")

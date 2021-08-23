@@ -28,11 +28,10 @@ public class User implements UserDetails {
     @Column(name="age")
     private int age;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    @ManyToMany
     private Set<Role> roles;
+
 
     public Set<Role> getRoles() {
         return roles;

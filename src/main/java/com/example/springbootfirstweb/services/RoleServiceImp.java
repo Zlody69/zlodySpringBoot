@@ -1,7 +1,7 @@
 package com.example.springbootfirstweb.services;
 
 
-import com.example.springbootfirstweb.DAO.RoleDao;
+import com.example.springbootfirstweb.dao.RoleDao;
 import com.example.springbootfirstweb.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

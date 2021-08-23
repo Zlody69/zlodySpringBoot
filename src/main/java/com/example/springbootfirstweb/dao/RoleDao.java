@@ -1,4 +1,4 @@
-package com.example.springbootfirstweb.DAO;
+package com.example.springbootfirstweb.dao;
 
 
 
