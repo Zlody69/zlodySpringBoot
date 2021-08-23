@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<header>
+    <form method="get" th:action="@{/logout}">
+        <input type="submit" value="logout">
+    </form>
+
+</header>
+<div th:block th:object="${curent_user}">
+    <p th:text="${curent_user.name}">Name</p>
+    <p th:text="${curent_user.surName}">SurName</p>
+    <p th:text="${curent_user.age}">Age</p>
+    <a th:href="@{/admin/{user_id}/edit(user_id=${curent_user.getId()})}">Edit user</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update</title>
+</head>
+<body>
+<header>
+  <form method="get" th:action="@{/logout}">
+    <input type="submit" value="logout">
+  </form>
+
+</header>
+<form th:method="put" th:action="@{/admin/{id}(id=${update_user.getId()})}" th:object="${update_user}">
+  <label for="name">Name</label>
+  <input type="text" th:field="*{name}" id="name">
+  <br>
+
+  <label for="surname">Surname</label>
+  <input type="text" th:field="*{surName}" id="surname">
+  <br>
+
+  <label for="age">Age</label>
+  <input type="text" th:field="*{age}" id="age">
+  <br>
+
+  <label for="password">Password</label>
+  <input type="text" th:field="*{password}" id="password">
+  <br>
+
+    <ul class="checkbox-list">
+      <li th:each="role:${allRole}">
+        <input type="checkbox" th:id="${role.name}" th:value="${role.name}" th:name="role" th:checked="${update_user.roles.contains(role)}" />
+        <span class="primary" th:text="${role.name}"></span>
+      </li>
+    </ul>
+
+
+  <input type="submit" value="Update">
+</form>
+<form th:method="delete" th:action="@{/admin/{id}(id=${update_user.getId()})}">
+  <input type="submit" value="Delete">
+</form>
+
+
+</body>
+</html>
