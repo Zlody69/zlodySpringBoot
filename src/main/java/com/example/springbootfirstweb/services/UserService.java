@@ -3,6 +3,7 @@ package com.example.springbootfirstweb.services;
 
 import com.example.springbootfirstweb.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface UserService {
     void deleteUser(Long userId);
 
     User findUserByUsername(String name);
+
+    @Transactional
+    User findUserByEmail(String email);
 }

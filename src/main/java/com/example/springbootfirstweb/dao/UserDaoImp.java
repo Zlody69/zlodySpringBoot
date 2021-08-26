@@ -2,6 +2,8 @@ package com.example.springbootfirstweb.dao;
 
 
 import com.example.springbootfirstweb.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,6 +17,7 @@ public class UserDaoImp implements UserDao {
     private EntityManager entityManager;
 
 
+
     @Override
     public void addUser(User user){
         entityManager.persist(user);
@@ -23,6 +26,12 @@ public class UserDaoImp implements UserDao {
     @Override
     public User findUser(Long userId){
         return entityManager.find(User.class, userId);
+    }
+
+    public User findWithFetch(Long userId){
+        return entityManager.createQuery("select user from User user join fetch user.roles where user.id=:id",User.class)
+                .setParameter("id", userId)
+                .getSingleResult();
     }
 
     @Override
@@ -39,7 +48,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void updateUser(User user, Long userId){
-        entityManager.detach(entityManager.find(User.class, userId));
+        user.setId(userId);
         entityManager.merge(user);
     }
 
@@ -49,5 +58,13 @@ public class UserDaoImp implements UserDao {
                 .setParameter("name", name)
                 .getSingleResult();
     }
-
+    @Override
+    public User findUserByEmail(String email){
+        System.out.println(email);
+        User user = entityManager.createQuery("select user from User user join fetch user.roles where user.email=:email",User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+        System.out.println(user);
+        return user;
+    }
 }

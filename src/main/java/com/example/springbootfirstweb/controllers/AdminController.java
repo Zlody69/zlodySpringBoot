@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,23 +30,19 @@ public class AdminController {
     }
 
     @GetMapping(value = "")
-    public String allUser(Model model){
+    public String allUser(Model model, Principal principal){
+        model.addAttribute("admin",userService.findUserByEmail(principal.getName()));
         model.addAttribute("users",userService.allUser());
-        return "all_users";
+        model.addAttribute("allRole", roleService.allRoles());
+        return "all_user";
     }
 
     @GetMapping(value = "/{id}")
     public String findUser(Model model, @PathVariable("id")Long id){
         model.addAttribute("curent_user", userService.findUser(id));
-        return "user_admin";
+        return "user";
     }
 
-    @GetMapping(value = "/{id}/edit")
-    public String editUser(Model model, @PathVariable("id")Long id){
-        model.addAttribute("update_user", userService.findUser(id));
-        model.addAttribute("allRole", roleService.allRoles());
-        return "update_user_admin";
-    }
 
     @GetMapping(value = "/create")
     public String addUser(@ModelAttribute("user") User user, Model model){
@@ -83,6 +80,4 @@ public class AdminController {
         userService.addUser(user);
         return "redirect:/admin";
     }
-
-
 }

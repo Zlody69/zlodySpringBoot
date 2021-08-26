@@ -16,12 +16,13 @@ public class UserServiceImp implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-    @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Transactional
@@ -34,7 +35,9 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void updateUser(User user, Long userId){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(!user.getPassword().equals(userDao.findUser(userId).getPassword())){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userDao.updateUser(user, userId);
     }
 
@@ -62,7 +65,11 @@ public class UserServiceImp implements UserService {
         return userDao.findUserByUsername(name);
     }
 
-
+    @Transactional
+    @Override
+    public User findUserByEmail(String email){
+        return userDao.findUserByEmail(email);
+    }
 
 
 }

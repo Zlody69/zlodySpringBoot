@@ -18,6 +18,8 @@ public class User implements UserDetails {
     @Column(name="password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
 
     @Column(name="name")
     private String name;
@@ -64,6 +66,25 @@ public class User implements UserDetails {
         roles.add(role);
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRolesString(){
+        String rolesStr = "";
+        for (Role role:this.getRoles()){
+            rolesStr += role.getStripName()+" ";
+        }
+        return rolesStr;
+    }
 
     public Long getId() {
         return id;
@@ -109,7 +130,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

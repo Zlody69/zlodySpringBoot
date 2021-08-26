@@ -25,8 +25,7 @@ public class UserController {
 
     @GetMapping(value = "/")
     public String findUser(Model model, Principal principal){
-        System.out.println("vse ok");
-        User user = userService.findUserByUsername(principal.getName());
+        User user = userService.findUserByEmail(principal.getName());
         model.addAttribute("curent_user", user);
         return "user";
     }
