@@ -3,6 +3,7 @@ package com.example.springbootfirstweb.controllers;
 
 import com.example.springbootfirstweb.model.User;
 import com.example.springbootfirstweb.services.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,22 +26,20 @@ public class UserController {
 
     @GetMapping(value = "/")
     public String findUser(Model model, Principal principal){
-        User user = userService.findUserByEmail(principal.getName());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("curent_user", user);
         return "user";
     }
 
     @GetMapping(value = "/edit")
     public String editUser(Model model, Principal principal){
-        User user = userService.findUserByUsername(principal.getName());
-        model.addAttribute("update_user", user);
+        model.addAttribute("update_user", userService.findUserByUsername(principal.getName()));
         return "update_user";
     }
 
     @PutMapping(value ="/update")
     public String updateUser(@ModelAttribute("user")User user, Principal principal){
-        User upUser = userService.findUserByUsername(principal.getName());
-        userService.updateUser(user, upUser.getId());
+        userService.updateUser(user, userService.findUserByUsername(principal.getName()).getId());
         return "redirect:/user/";
     }
 }

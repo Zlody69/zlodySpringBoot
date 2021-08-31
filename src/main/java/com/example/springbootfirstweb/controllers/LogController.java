@@ -27,15 +27,6 @@ public class LogController {
         return "/login";
     }
 
-    @GetMapping(value = "/hello")
-    public String printWelcome(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello!");
-        messages.add("I'm Spring MVC-SECURITY application");
-        messages.add("5.2.0 version by sep'19 ");
-        model.addAttribute("messages", messages);
-        return "hello";
-    }
 
     @GetMapping(value = "/default")
     public String redirRole(HttpServletRequest request){
