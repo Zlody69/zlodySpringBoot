@@ -31,7 +31,8 @@ public class AdminController {
 
     @GetMapping(value = "")
     public String allUser(Model model, Principal principal){
-        model.addAttribute("admin",userService.findUserByEmail(principal.getName()));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("admin",user);
         model.addAttribute("users",userService.allUser());
         model.addAttribute("allRole", roleService.allRoles());
         return "all_user";
