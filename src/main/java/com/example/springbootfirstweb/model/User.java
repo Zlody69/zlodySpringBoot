@@ -12,37 +12,30 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surName;
 
-    @Column(name="age")
+    @Column(name = "age")
     private int age;
 
 
     @ManyToMany
     private Set<Role> roles;
 
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    @Transient
+    private String[] rolesDigit;
 
     public User() {
     }
@@ -53,6 +46,7 @@ public class User implements UserDetails {
         this.age = age;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
@@ -62,12 +56,26 @@ public class User implements UserDetails {
                 ", age=" + age +
                 '}';
     }
-    public void addRole(Role role){
+
+    public void addRole(Role role) {
         roles.add(role);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+
+    public String[] getRolesDigit() {
+        return rolesDigit;
+    }
+
+    public void setRolesDigit(String[] rolesDigit) {
+        this.rolesDigit = rolesDigit;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -78,16 +86,20 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getRolesString(){
+    public String getRolesString() {
         String rolesStr = "";
-        for (Role role:this.getRoles()){
-            rolesStr += role.getStripName()+" ";
+        for (Role role : this.getRoles()) {
+            rolesStr += role.getStripName() + " ";
         }
         return rolesStr;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -114,10 +126,6 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -126,6 +134,10 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

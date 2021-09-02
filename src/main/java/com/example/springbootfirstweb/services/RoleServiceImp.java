@@ -10,19 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class RoleServiceImp implements RoleService{
+public class RoleServiceImp implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
     @Transactional
     @Override
-    public List<Role> allRoles(){
+    public List<Role> allRoles() {
         return roleRepository.findAll();
     }
 
     @Transactional
     @Override
-    public Role findRoleByName(String name){
+    public Role findRoleByName(String name) {
         return roleRepository.findRoleByName(name);
     }
 }

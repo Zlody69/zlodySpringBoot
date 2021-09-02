@@ -20,6 +20,5 @@ public interface UserService {
 
     User findUserByUsername(String name);
 
-    @Transactional
     User findUserByEmail(String email);
 }
