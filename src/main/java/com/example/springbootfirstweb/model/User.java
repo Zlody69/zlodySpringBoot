@@ -34,9 +34,6 @@ public class User implements UserDetails {
     @ManyToMany
     private Set<Role> roles;
 
-    @Transient
-    private String[] rolesDigit;
-
     public User() {
     }
 
@@ -62,13 +59,6 @@ public class User implements UserDetails {
     }
 
 
-    public String[] getRolesDigit() {
-        return rolesDigit;
-    }
-
-    public void setRolesDigit(String[] rolesDigit) {
-        this.rolesDigit = rolesDigit;
-    }
 
     public Set<Role> getRoles() {
         return roles;

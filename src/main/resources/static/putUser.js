@@ -1,14 +1,13 @@
 function putUser() {
     const form = new FormData(document.getElementById("formEditUser"))
-    let userData = {rolesDigit: []}
+    let userData = {roles: []}
     form.forEach((value, key) => {
-        if (value === "ROLE_ADMIN") {
-            userData.rolesDigit.push(value)
-        } else if (value === "ROLE_USER") {
-            userData.rolesDigit.push(value)
-        } else {
-            userData[key] = value
-        }
+        if(value==="ROLE_ADMIN"){
+            userData.roles.push(value)
+        }else if(value==="ROLE_USER"){
+            userData.roles.push(value)
+        }else {
+            userData[key]=value}
     })
     console.log(userData)
 

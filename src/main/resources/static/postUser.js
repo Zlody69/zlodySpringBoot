@@ -1,11 +1,11 @@
 function postUser(){
     const formCreate = new FormData(document.getElementById("formCreateUser"))
-    let createUserData = {rolesDigit:[]}
+    let createUserData = {roles:[]}
     formCreate.forEach((value, key) => {
         if(value==="ROLE_ADMIN"){
-            createUserData.rolesDigit.push(value)
+            createUserData.roles.push(value)
         }else if(value==="ROLE_USER"){
-            createUserData.rolesDigit.push(value)
+            createUserData.roles.push(value)
         }else {
             createUserData[key]=value}
     })
